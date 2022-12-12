@@ -9,17 +9,24 @@
 /*   Updated: 2022/11/19 17:05:10 by abenfill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *str)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
 	while (str[i])
 		i++;
 	return (i);
+}
+
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c <= 127)
+		return (1);
+	else
+		return (0);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -30,7 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	p = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	p = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!p)
 		return (NULL);
 	while (s1[j])
@@ -41,6 +48,44 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[i])
 		p[j++] = s2[i++];
 	p[j] = '\0';
-	free(s1);
 	return (p);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*str;
+	unsigned int	i;
+	size_t			lenstr;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	lenstr = ft_strlen(s);
+	if (lenstr - start < len)
+		len = lenstr - start;
+	str = malloc(len + 1);
+	if (!str)
+		return (NULL);
+	while (i < len && s[start])
+		str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	size_t		i;
+	char	*ptr;
+	char	*tmp;
+
+	tmp = (char *) str;
+	ptr = 0;
+	i = 0;
+	while (i <= ft_strlen(str))
+	{
+		if (str[i] == (char)c)
+			return ((char *)str + i);
+		i++;
+	}
+	return (0);
 }
